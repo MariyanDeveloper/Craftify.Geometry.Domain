@@ -9,7 +9,7 @@ A Line is defined by two points in a 2D or 3D space.
 ### 2. Arc
 An Arc is defined by a center point, a radius, and start and end angles.
 
-#### Methods~~~~
+#### Methods
 - **Evaluate**
 
 
