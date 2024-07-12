@@ -20,7 +20,7 @@ public class Point3DTests
         var point1 = new Point3D(1, 1, 0);
         var point2 = new Point3D(1, 2, 0);
 
-        var result = point1.IsAlmostEqual(point2, 1.1);
+        var result = point1.AlmostEqualTo(point2, 1.1);
 
         result.Should().BeTrue();
     }
