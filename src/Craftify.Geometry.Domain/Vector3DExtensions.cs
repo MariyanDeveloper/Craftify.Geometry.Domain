@@ -4,7 +4,10 @@ public static class Vector3DExtensions
 {
     public static double GetMagnitude(this Vector3D vector)
     {
-        return Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y + vector.Z * vector.Z);
+        var (x, y, z) = vector;
+        return Math.Sqrt(
+            x.Square() + y.Square() + z.Square()
+        );
     }
 
     public static Vector3D Normalize(this Vector3D vector)
