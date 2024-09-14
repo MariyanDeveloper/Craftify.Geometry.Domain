@@ -29,7 +29,7 @@ public class Point3DTests
     [Fact]
     public void Translate_ShouldTranslatePointByVector()
     {
-        var point = new Point3D(1, 2, 3);
+        var point = Point.ByCoordinates(1, 2, 3);
         var vector = new Vector3D(4, 5, 6);
 
         var result = point.Translate(vector);
