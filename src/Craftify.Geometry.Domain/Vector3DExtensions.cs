@@ -88,7 +88,11 @@ public static class Vector3DExtensions
             v1.CrossProduct(v2)
                 .DotProduct(rotationAxis),
             v1.DotProduct(v2));
-        return angle.ToDegrees();
+        var angleInDegrees = angle.ToDegrees();
+        
+        return angleInDegrees < 0
+            ? angleInDegrees + 360
+            : angleInDegrees;
     }
 
     public static Vector3D ProjectOnto(this Vector3D vector, Vector3D onto)
