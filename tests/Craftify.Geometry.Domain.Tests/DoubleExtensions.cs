@@ -9,15 +9,12 @@ public class DoubleExtensionsTests
     [Fact]
     public void AlmostEqualTo_ShouldReturnTrueForValuesWithinTolerance()
     {
-        // Arrange
         var value1 = 1.000001;
         var value2 = 1.000002;
         var tolerance = 1e-5;
 
-        // Act
         var result = value1.AlmostEqualTo(value2, tolerance);
 
-        // Assert
         result
             .Should()
             .BeTrue(
@@ -27,15 +24,12 @@ public class DoubleExtensionsTests
     [Fact]
     public void AlmostEqualTo_ShouldReturnFalseForValuesOutsideTolerance()
     {
-        // Arrange
         var value1 = 1.0;
         var value2 = 1.1;
         var tolerance = 1e-5;
 
-        // Act
         var result = value1.AlmostEqualTo(value2, tolerance);
 
-        // Assert
         result
             .Should()
             .BeFalse(
