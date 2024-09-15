@@ -1,40 +1,56 @@
-﻿namespace Craftify.Geometry.Domain.Tests;
+﻿using FluentAssertions;
+
+namespace Craftify.Geometry.Domain.Tests;
 
 public class Vector3DTests
 {
     [Fact]
-    public void A()
+    public void Magnitude_ShouldCorrectlyCalculate()
     {
-        //Arrange
-        var vector = new Vector3D(
-            -5, -3, 0
-        );
-        //Act
+        var vector = Vector.ByCoordinates(4, 3);
         var magnitude = vector.Magnitude();
-        //Assert
+        magnitude.Should().Be(5);
     }
 
     [Fact]
-    public void C()
+    public void AngleTo_ShouldReturn90Degrees_WhenXAxisAndYAxisArePerpendicular()
     {
+        var xAxis = Vector.XAxis();
+        var yAxis = Vector.YAxis();
 
-        var v1 = Vector.ByCoordinates(
-            1, 0, 0);
-        var v2 = Vector.ByCoordinates(0, -1, 0);
-        var r1 = v1.AngleTo(v2);
-        var r2 = v2.AngleTo(v1);
-        var r3 = v1.AngleAboutAxis(v2, Vector.ZAxis());
-        var r4 = v2.AngleAboutAxis(v1, Vector.ZAxis());
-        var a = 5;
-        // var v1 = new Vector3D(
-        //     -1, -1, 0
-        // );
-        // var v2 = new Vector3D(
-        //     2, 0, 0
-        // );
-        // var angle1 = v1.AngleTo(v2);
-        // var a2 = v2.AngleTo(v1);
-        // var a3 = v2.AngleAboutAxis(v1, Vector.ZAxis());
+        var angle = xAxis.AngleTo(yAxis);
 
+        angle.Should().Be(90);
+    }
+
+    [Fact]
+    public void AngleTo_ShouldReturn90Degrees_WhenXAxisAndNegativeYAxisArePerpendicular()
+    {
+        var xAxis = Vector.XAxis();
+        var yAxis = Vector.YAxis().Negate();
+
+        var angle = xAxis.AngleTo(yAxis);
+
+        angle.Should().Be(90);
+    }
+
+    [Fact]
+    public void AngleAboutAxis_ShouldReturn90Degrees_WhenXAxisAndYAxisAreMeasuredAboutZAxis()
+    {
+        var vector1 = Vector.XAxis();
+        var vector2 = Vector.YAxis();
+        var rotationAxis = Vector.ZAxis();
+        var angle = vector1.AngleAboutAxis(vector2, rotationAxis);
+        angle.Should().Be(90);
+    }
+
+    [Fact]
+    public void AngleAboutAxis_ShouldReturn270Degrees_WhenYAxisAndXAxisAreMeasuredAboutZAxis()
+    {
+        var vector1 = Vector.XAxis();
+        var vector2 = Vector.YAxis();
+        var rotationAxis = Vector.ZAxis();
+        var angle = vector2.AngleAboutAxis(vector1, rotationAxis);
+        angle.Should().Be(270);
     }
 }
