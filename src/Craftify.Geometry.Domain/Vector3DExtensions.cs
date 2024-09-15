@@ -5,18 +5,13 @@ public static class Vector3DExtensions
     public static double Magnitude(this Vector3D vector)
     {
         var (x, y, z) = vector;
-        return Math.Sqrt(
-            x.Square() + y.Square() + z.Square()
-        );
+        return Math.Sqrt(x.Square() + y.Square() + z.Square());
     }
 
     public static Vector3D Normalize(this Vector3D vector)
     {
         var magnitude = vector.Magnitude();
-        return new Vector3D(
-            vector.X / magnitude,
-            vector.Y / magnitude,
-            vector.Z / magnitude);
+        return new Vector3D(vector.X / magnitude, vector.Y / magnitude, vector.Z / magnitude);
     }
 
     public static double DotProduct(this Vector3D vector, Vector3D other)
@@ -42,7 +37,7 @@ public static class Vector3DExtensions
     {
         return new Vector3D(vector.X - other.X, vector.Y - other.Y, vector.Z - other.Z);
     }
-    
+
     public static Vector3D Multiply(this Vector3D vector, double scalar)
     {
         return new Vector3D(vector.X * scalar, vector.Y * scalar, vector.Z * scalar);
@@ -58,41 +53,30 @@ public static class Vector3DExtensions
         return new Vector3D(vector.X * scalar, vector.Y * scalar, vector.Z * scalar);
     }
 
-
     public static Vector3D Negate(this Vector3D vector)
     {
         return new Vector3D(-vector.X, -vector.Y, -vector.Z);
     }
-    
+
     public static double AngleTo(this Vector3D vector, Vector3D other)
     {
         var dotProduct = vector.DotProduct(other);
         var magnitudeA = vector.Magnitude();
         var magnitudeB = other.Magnitude();
         var cosTheta = dotProduct / (magnitudeA * magnitudeB);
-        
-        return Math.Acos(cosTheta)
-            .ToDegrees();
+
+        return Math.Acos(cosTheta).ToDegrees();
     }
 
     public static double AngleAboutAxis(this Vector3D vector, Vector3D other, Vector3D rotationAxis)
     {
-        var v1 = vector.Subtract(
-            vector
-                .ProjectOnto(rotationAxis));
-        var v2 = other.Subtract(
-            other
-                .ProjectOnto(rotationAxis));
+        var v1 = vector.Subtract(vector.ProjectOnto(rotationAxis));
+        var v2 = other.Subtract(other.ProjectOnto(rotationAxis));
 
-        var angle = Math.Atan2(
-            v1.CrossProduct(v2)
-                .DotProduct(rotationAxis),
-            v1.DotProduct(v2));
+        var angle = Math.Atan2(v1.CrossProduct(v2).DotProduct(rotationAxis), v1.DotProduct(v2));
         var angleInDegrees = angle.ToDegrees();
-        
-        return angleInDegrees < 0
-            ? angleInDegrees + 360
-            : angleInDegrees;
+
+        return angleInDegrees < 0 ? angleInDegrees + 360 : angleInDegrees;
     }
 
     public static Vector3D ProjectOnto(this Vector3D vector, Vector3D onto)
