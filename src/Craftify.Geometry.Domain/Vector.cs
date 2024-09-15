@@ -13,4 +13,5 @@ public static class Vector
     );
 
     public static Vector3D ByCoordinates(double x, double y, double z) => new(x, y, z);
+    public static Vector3D ByCoordinates(double x, double y) => new(x, y, 0);
 }
