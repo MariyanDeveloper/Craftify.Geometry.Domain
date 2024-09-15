@@ -2,10 +2,8 @@
 
 namespace Craftify.Geometry.Domain.Tests;
 
-
 public class DoubleExtensionsTests
 {
-    
     [Fact]
     public void AlmostEqualTo_ShouldReturnTrueForValuesWithinTolerance()
     {
@@ -18,7 +16,8 @@ public class DoubleExtensionsTests
         result
             .Should()
             .BeTrue(
-                because: "the difference between 1.000001 and 1.000002 is within the tolerance of 1e-5");
+                because: "the difference between 1.000001 and 1.000002 is within the tolerance of 1e-5"
+            );
     }
 
     [Fact]
@@ -33,6 +32,7 @@ public class DoubleExtensionsTests
         result
             .Should()
             .BeFalse(
-                because: "the difference between 1.0 and 1.1 is not within the tolerance of 1e-5");
+                because: "the difference between 1.0 and 1.1 is not within the tolerance of 1e-5"
+            );
     }
 }

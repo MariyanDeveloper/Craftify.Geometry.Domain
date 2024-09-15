@@ -13,7 +13,7 @@ public class Point3DTests
 
         result.Should().Be(6);
     }
-    
+
     [Fact]
     public void IsAlmostEqual_ShouldReturnTrueForPointsWithinTolerance()
     {
@@ -24,7 +24,6 @@ public class Point3DTests
 
         result.Should().BeTrue();
     }
-    
 
     [Fact]
     public void Translate_ShouldTranslatePointByVector()
