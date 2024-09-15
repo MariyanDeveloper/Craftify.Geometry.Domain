@@ -1,10 +1,7 @@
 ﻿namespace Craftify.Geometry.Domain;
 
-public record Line(Point3D Start, Point3D End)
+public static class Line
 {
-    public Point3D Evaluate(double t) => new Point3D(
-        Start.X + t * (End.X - Start.X),
-        Start.Y + t * (End.Y - Start.Y),
-        Start.Z + t * (End.Z - Start.Z)
-    );
+    public static LineSegment ByStartPointAndEndPoint(Point3D start, Point3D end) =>
+        new(start, end);
 }
