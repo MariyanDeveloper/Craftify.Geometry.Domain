@@ -35,4 +35,19 @@ public class DoubleExtensionsTests
                 because: "the difference between 1.0 and 1.1 is not within the tolerance of 1e-5"
             );
     }
+
+    [Theory]
+    [InlineData(-370.0, 350.0)]
+    [InlineData(-730.0, 350.0)]
+    [InlineData(-40.0, 320.0)]
+    [InlineData(-15.0, 345.0)]
+    [InlineData(0.0, 0.0)]
+    [InlineData(40.0, 40.0)]
+    [InlineData(370.0, 10.0)]
+    [InlineData(730.0, 10.0)]
+    public void NormalizeAngle_ShouldCorrectlyNormalizeAngle(double angle, double expectedAngle)
+    {
+        var actualAngle = angle.NormalizeAngle();
+        actualAngle.Should().Be(expectedAngle);
+    }
 }

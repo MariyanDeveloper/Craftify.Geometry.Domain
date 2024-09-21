@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
+        <WarningsAsErrors>true</WarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
