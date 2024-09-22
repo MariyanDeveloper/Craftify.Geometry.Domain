@@ -4,59 +4,103 @@ namespace Craftify.Geometry.ShapeDrawer;
 
 public static class Visualization
 {
-    public static VisualizationType CreatePoint(
+    public static VisualizeFunction CreatePoint(
         Point3D point,
         CreatePointArguments? pointArguments = default
     )
     {
         pointArguments ??= CreatePointArguments.Default;
-        return new PointVisualizationType(point, pointArguments.Paint, pointArguments.PointRadius);
+        var pointVisualizationType = new PointVisualizationType(
+            point,
+            pointArguments.Paint,
+            pointArguments.PointRadius
+        );
+
+        return (canvas, context) =>
+        {
+            pointVisualizationType.DrawOnCanvas(canvas, context);
+        };
     }
 
-    public static VisualizationType CreatePoints(params Point3D[] points)
+    public static VisualizeFunction CreatePoints(params Point3D[] points)
     {
-        var pointVisualizations = points
-            .Select(point => new PointVisualizationType(
-                point,
-                Style.ForPoint(),
-                Defaults.Geometry.PointRadius
-            ))
-            .ToArray();
-        return new CompositeVisualizationType(pointVisualizations);
+        var pointVisualizations = points.Select(point => new PointVisualizationType(
+            point,
+            Style.ForPoint(),
+            Defaults.Geometry.PointRadius
+        ));
+        return (canvas, context) =>
+        {
+            foreach (var pointVisualizationType in pointVisualizations)
+            {
+                pointVisualizationType.DrawOnCanvas(canvas, context);
+            }
+        };
     }
 
-    public static VisualizationType CreateSmoothLine(LineSegment line)
+    public static VisualizeFunction CreateSmoothLine(LineSegment line)
     {
-        return new LineVisualizationType(line, VisualizeLineAs.Line, Style.ForSmoothLine());
+        var lineVisualizationType = new LineVisualizationType(
+            line,
+            VisualizeLineAs.Line,
+            Style.ForSmoothLine()
+        );
+        return (canvas, context) =>
+        {
+            lineVisualizationType.DrawOnCanvas(canvas, context);
+        };
     }
 
-    public static VisualizationType CreateSharpLine(LineSegment line)
+    public static VisualizeFunction CreateSharpLine(LineSegment line)
     {
-        return new LineVisualizationType(line, VisualizeLineAs.Line, Style.ForSharpLine());
+        var lineVisualizationType = new LineVisualizationType(
+            line,
+            VisualizeLineAs.Line,
+            Style.ForSharpLine()
+        );
+        return (canvas, context) =>
+        {
+            lineVisualizationType.DrawOnCanvas(canvas, context);
+        };
     }
 
-    public static VisualizationType CreateSmoothLines(params LineSegment[] lines)
+    public static VisualizeFunction CreateSmoothLines(params LineSegment[] lines)
     {
-        var lineVisualizations = lines
-            .Select(line => new LineVisualizationType(
-                line,
-                VisualizeLineAs.Path,
-                Style.ForSmoothLine()
-            ))
-            .ToArray();
-        return new CompositeVisualizationType(lineVisualizations);
+        var lineVisualizations = lines.Select(line => new LineVisualizationType(
+            line,
+            VisualizeLineAs.Path,
+            Style.ForSmoothLine()
+        ));
+        return (canvas, context) =>
+        {
+            foreach (var lineVisualizationType in lineVisualizations)
+            {
+                lineVisualizationType.DrawOnCanvas(canvas, context);
+            }
+        };
     }
 
-    public static VisualizationType CreateComposite(params VisualizationType[] visualizations)
+    public static VisualizeFunction CreateComposite(params VisualizeFunction[] visualizations)
     {
-        return new CompositeVisualizationType(visualizations);
+        return (canvas, context) =>
+        {
+            foreach (var visualizeFunction in visualizations)
+            {
+                visualizeFunction(canvas, context);
+            }
+        };
     }
 
-    public static VisualizationType CreateArc(ArcSegment arc)
+    public static VisualizeFunction CreateArc(ArcSegment arc)
     {
-        return new ArcVisualizationType(arc, Style.ForSharpLine());
+        var arcVisualizationType = new ArcVisualizationType(arc, Style.ForSharpLine());
+        return (canvas, context) =>
+        {
+            arcVisualizationType.DrawOnCanvas(canvas, context);
+        };
     }
 
-    public static VisualizationType Compose(this IEnumerable<VisualizationType> visualizations) =>
-        new CompositeVisualizationType(visualizations.ToList());
+    public static VisualizeFunction Compose(
+        this IEnumerable<VisualizeFunction> visualizeFunctions
+    ) => CreateComposite(visualizeFunctions.ToArray());
 }

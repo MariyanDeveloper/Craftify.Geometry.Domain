@@ -21,6 +21,3 @@ public record ArcVisualizationType(ArcSegment ArcSegment, SKPaint Paint) : Visua
 
 public record PointVisualizationType(Point3D Point, SKPaint Paint, float Radius)
     : VisualizationType;
-
-public record CompositeVisualizationType(IReadOnlyList<VisualizationType> VisualizationTypes)
-    : VisualizationType;

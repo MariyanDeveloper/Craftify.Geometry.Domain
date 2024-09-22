@@ -6,21 +6,6 @@ namespace Craftify.Geometry.ShapeDrawer;
 public static class DrawOnCanvasStrategies
 {
     public static void DrawOnCanvas(
-        this VisualizationType visualizationType,
-        SKCanvas canvas,
-        DrawingContext drawingContext
-    )
-    {
-        visualizationType.Switch(
-            point: pointVisualization => pointVisualization.DrawOnCanvas(canvas, drawingContext),
-            line: lineVisualization => lineVisualization.DrawOnCanvas(canvas, drawingContext),
-            arc: arcVisualization => arcVisualization.DrawOnCanvas(canvas, drawingContext),
-            composite: compositeVisualization =>
-                compositeVisualization.DrawOnCanvas(canvas, drawingContext)
-        );
-    }
-
-    public static void DrawOnCanvas(
         this ArcVisualizationType arcVisualizationType,
         SKCanvas canvas,
         DrawingContext drawingContext
@@ -40,18 +25,6 @@ public static class DrawOnCanvasStrategies
             false,
             arcVisualizationType.Paint
         );
-    }
-
-    public static void DrawOnCanvas(
-        this CompositeVisualizationType compositeVisualizationType,
-        SKCanvas canvas,
-        DrawingContext drawingContext
-    )
-    {
-        foreach (var visualization in compositeVisualizationType.VisualizationTypes)
-        {
-            visualization.DrawOnCanvas(canvas, drawingContext);
-        }
     }
 
     public static void DrawOnCanvas(

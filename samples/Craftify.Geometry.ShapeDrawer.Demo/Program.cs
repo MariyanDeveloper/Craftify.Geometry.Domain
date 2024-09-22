@@ -44,7 +44,30 @@ DrawingBoard.Draw(
         polygonVisualizations,
         arcVisualization,
         centerArcVisualization,
-        pointsOnArcVisualizations
+        pointsOnArcVisualizations,
+        (canvas, context) =>
+        {
+            var point1 = Point.ByCoordinates(250, 300);
+            var point2 = Point.ByCoordinates(250, 400);
+            var skPoint1 = point1
+                .AdaptGeometryToStartFromLeftBottomCornerOnCanvas(context.Height)
+                .MapTo2DSkPoint();
+
+            var skPoint2 = point2
+                .AdaptGeometryToStartFromLeftBottomCornerOnCanvas(context.Height)
+                .MapTo2DSkPoint();
+            var pointStyle = new SKPaint() { StrokeWidth = 6, Color = SKColors.Blue };
+
+            var circleStyle = new SKPaint()
+            {
+                Color = SKColors.Black,
+                StrokeWidth = 4,
+                Style = SKPaintStyle.Fill,
+                IsAntialias = true,
+            };
+            canvas.DrawPoint(skPoint1, pointStyle);
+            canvas.DrawCircle(skPoint2, 3, circleStyle);
+        }
     ),
     new ImageArguments(Width: 500, Height: 600, ImagePath: path, Background: SKColors.White)
 );
