@@ -26,4 +26,7 @@ public static class Point3DExtensions
             (point.Z + other.Z) / halfDivisionNumber
         );
     }
+
+    public static Vector3D SubtractPoint(this Point3D main, Point3D other)
+        => new(main.X - other.X, main.Y - other.Y, main.Z - other.Z);
 }
