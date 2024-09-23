@@ -11,4 +11,22 @@ public static class LineSegmentEvaluation
             start.Z + parameter * (end.Z - start.Z)
         );
     }
+
+    public static double GetLength(this LineSegment lineSegment)
+    {
+        double deltaX = lineSegment.End.X - lineSegment.Start.X;
+        double deltaY = lineSegment.End.Y - lineSegment.Start.Y;
+        double deltaZ = lineSegment.End.Z - lineSegment.Start.Z;
+
+        return Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+    }
+
+    public static Vector3D GetDirection(this LineSegment lineSegment)
+    {
+        double deltaX = lineSegment.End.X - lineSegment.Start.X;
+        double deltaY = lineSegment.End.Y - lineSegment.Start.Y;
+        double deltaZ = lineSegment.End.Z - lineSegment.Start.Z;
+
+        return new Vector3D(deltaX, deltaY, deltaZ);
+    }
 }
