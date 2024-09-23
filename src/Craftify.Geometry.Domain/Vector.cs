@@ -13,4 +13,9 @@ public static class Vector
     public static Vector3D ByCoordinates(double x, double y) => new(x, y, 0);
 
     public static Vector3D ByCoordinates(double x) => new(x, 0, 0);
+
+    public static Vector3D ByTwoPoints(Point3D start, Point3D end)
+    {
+        return end.AsVector().Subtract(start.AsVector());
+    }
 }
