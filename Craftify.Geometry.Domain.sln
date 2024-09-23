@@ -11,6 +11,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{961F6D72
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Craftify.Geometry.Domain.Tests", "tests\Craftify.Geometry.Domain.Tests\Craftify.Geometry.Domain.Tests.csproj", "{763B4A15-77AF-488A-8D33-C17E7D544A63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Craftify.Geometry.ShapeDrawer", "src\Craftify.Geometry.ShapeDrawer\Craftify.Geometry.ShapeDrawer.csproj", "{23E384D2-1EEC-486F-A303-76ED4E5B7EB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{3BFB49EE-E76E-4612-A3B5-B619FB7D6C17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Craftify.Geometry.ShapeDrawer.Demo", "samples\Craftify.Geometry.ShapeDrawer.Demo\Craftify.Geometry.ShapeDrawer.Demo.csproj", "{CE87444C-3F6D-4B3C-A46A-B30EFF0EA3E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +28,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DB4BC6C8-25ED-4E93-9F35-86073D9F7FA8} = {3862DC42-9D39-4C57-9305-D9D66774724B}
 		{763B4A15-77AF-488A-8D33-C17E7D544A63} = {961F6D72-7C81-499C-87C2-0E330E1D7A86}
+		{23E384D2-1EEC-486F-A303-76ED4E5B7EB0} = {3862DC42-9D39-4C57-9305-D9D66774724B}
+		{CE87444C-3F6D-4B3C-A46A-B30EFF0EA3E0} = {3BFB49EE-E76E-4612-A3B5-B619FB7D6C17}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DB4BC6C8-25ED-4E93-9F35-86073D9F7FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -32,5 +40,13 @@ Global
 		{763B4A15-77AF-488A-8D33-C17E7D544A63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{763B4A15-77AF-488A-8D33-C17E7D544A63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{763B4A15-77AF-488A-8D33-C17E7D544A63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E384D2-1EEC-486F-A303-76ED4E5B7EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E384D2-1EEC-486F-A303-76ED4E5B7EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E384D2-1EEC-486F-A303-76ED4E5B7EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E384D2-1EEC-486F-A303-76ED4E5B7EB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE87444C-3F6D-4B3C-A46A-B30EFF0EA3E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE87444C-3F6D-4B3C-A46A-B30EFF0EA3E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE87444C-3F6D-4B3C-A46A-B30EFF0EA3E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE87444C-3F6D-4B3C-A46A-B30EFF0EA3E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
