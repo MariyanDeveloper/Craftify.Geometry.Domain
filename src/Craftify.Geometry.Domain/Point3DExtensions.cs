@@ -26,4 +26,7 @@ public static class Point3DExtensions
             (point.Z + other.Z) / halfDivisionNumber
         );
     }
+
+    public static Vector3D AsVector(this Point3D point) =>
+        Vector.ByCoordinates(point.X, point.Y, point.Z);
 }
