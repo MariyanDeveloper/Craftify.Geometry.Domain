@@ -27,4 +27,7 @@ public static class DoubleExtensions
     {
         return to.SubtractFrom(from).ToAbsolute() < tolerance;
     }
+
+    public static double RoundToTolerance(this double value, double tolerance = Defaults.Tolerance)
+        => Math.Round(value / tolerance) * tolerance;
 }

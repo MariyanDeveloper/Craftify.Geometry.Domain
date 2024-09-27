@@ -94,4 +94,9 @@ public static class LineSegmentEvaluation
             End = lineSegment.End.Translate(lineSegment.GetNormalizedDirection().Scale(distance)),
         };
     }
+
+    public static bool HasEndPoint(this LineSegment lineSegment, Point3D point)
+    {
+        return lineSegment.Start.AlmostEqualTo(point) || lineSegment.End.AlmostEqualTo(point);
+    }
 }
