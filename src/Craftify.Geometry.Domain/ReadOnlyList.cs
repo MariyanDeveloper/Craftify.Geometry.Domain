@@ -2,6 +2,8 @@
 
 public static class ReadOnlyList
 {
+    public static IReadOnlyList<T> Of<T>() => [];
+
     public static IReadOnlyList<T> Of<T>(T value) => [value];
 
     public static IReadOnlyList<T> Of<T>(IEnumerable<T> values) => [.. values];
