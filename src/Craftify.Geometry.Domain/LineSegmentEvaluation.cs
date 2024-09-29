@@ -94,4 +94,13 @@ public static class LineSegmentEvaluation
             End = lineSegment.End.Translate(lineSegment.GetNormalizedDirection().Scale(distance)),
         };
     }
+
+    public static LineSegment Transform(
+        this LineSegment line,
+        CoordinateSystem3D coordinateSystem
+    ) =>
+        Line.ByStartPointAndEndPoint(
+            start: line.Start.Transform(coordinateSystem),
+            end: line.End.Transform(coordinateSystem)
+        );
 }

@@ -101,4 +101,12 @@ public static class Vector3DExtensions
     {
         return vector.Magnitude().AlmostEqualTo(0, tolerance);
     }
+
+    public static bool IsUnit(this Vector3D vector, double tolerance = Defaults.Tolerance)
+    {
+        return vector.Magnitude().AlmostEqualTo(1, tolerance);
+    }
+
+    public static Vector3D Transform(this Vector3D vector, CoordinateSystem3D coordinateSystem) =>
+        coordinateSystem.OfVector(vector);
 }
