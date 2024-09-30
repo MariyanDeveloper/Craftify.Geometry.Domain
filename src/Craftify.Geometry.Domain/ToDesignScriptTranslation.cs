@@ -23,4 +23,21 @@ public static class ToDesignScriptTranslation
         var lineSegmentsParsed = lineSegments.Select(AsDesignScript);
         return string.Join($";{Environment.NewLine}", lineSegmentsParsed);
     }
+
+    public static string AsDesignScript(this CoordinateSystem3D coordinateSystem)
+    {
+        return $"""
+            CoordinateSystem.ByOriginVectors(
+                 {coordinateSystem.Origin.AsDesignScript()},
+                 {coordinateSystem.XAxis.AsDesignScript()},
+                 {coordinateSystem.YAxis.AsDesignScript()},
+                 {coordinateSystem.ZAxis.AsDesignScript()}
+            );
+            """;
+    }
+
+    public static string AsDesignScript(this Vector3D vector)
+    {
+        return $"Vector.ByCoordinates({vector.X}, {vector.Y}, {vector.Z})";
+    }
 }

@@ -17,6 +17,9 @@ public static class Point3DExtensions
         return new Point3D(point.X + vector.X, point.Y + vector.Y, point.Z + vector.Z);
     }
 
+    public static Point3D Transform(this Point3D point, CoordinateSystem3D coordinateSystem) =>
+        coordinateSystem.OfPoint(point);
+
     public static Point3D Midpoint(this Point3D point, Point3D other)
     {
         var halfDivisionNumber = 2;
