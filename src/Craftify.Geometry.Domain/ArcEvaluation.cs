@@ -18,4 +18,7 @@ public static class ArcEvaluation
 
     public static Point3D GetEndPoint(this ArcSegment arcSegment) =>
         arcSegment.GetPointAtParameter(1);
+
+    public static double GetLength(this ArcSegment arcSegment) =>
+        arcSegment.SweepAngle.ToRadians() * arcSegment.Radius;
 }

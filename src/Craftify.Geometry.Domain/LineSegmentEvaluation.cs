@@ -1,4 +1,4 @@
-﻿namespace Craftify.Geometry.Domain;
+namespace Craftify.Geometry.Domain;
 
 public static class LineSegmentEvaluation
 {
@@ -95,8 +95,20 @@ public static class LineSegmentEvaluation
         };
     }
 
-    public static bool HasEndPoint(this LineSegment lineSegment, Point3D point)
+    public static bool HasEndPoint(
+        this LineSegment lineSegment,
+        Point3D point,
+        double tolerance = Defaults.Tolerance)
     {
-        return lineSegment.Start.AlmostEqualTo(point) || lineSegment.End.AlmostEqualTo(point);
+        return lineSegment.GetEndPoints().Any(endPoint => endPoint.AlmostEqualTo(point, tolerance));
     }
+
+    public static LineSegment Transform(
+        this LineSegment line,
+        CoordinateSystem3D coordinateSystem
+    ) =>
+        Line.ByStartPointAndEndPoint(
+            start: line.Start.Transform(coordinateSystem),
+            end: line.End.Transform(coordinateSystem)
+        );
 }
