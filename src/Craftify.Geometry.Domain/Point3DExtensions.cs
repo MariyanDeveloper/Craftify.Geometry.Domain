@@ -32,4 +32,15 @@ public static class Point3DExtensions
 
     public static Vector3D AsVector(this Point3D point) =>
         Vector.ByCoordinates(point.X, point.Y, point.Z);
+
+    public static double MeasureSignedDistanceToPointAlongVector(
+       this Point3D point, Point3D other, Vector3D vector)
+    {
+        var difference = other.AsVector().Subtract(point.AsVector());
+        return !difference.IsZero() ? difference.DotProduct(vector.Normalize()) : 0;
+    }
+
+    public static double MeasureDistanceToPointAlongVector(
+        this Point3D point, Point3D other, Vector3D vector) => 
+            point.MeasureSignedDistanceToPointAlongVector(other, vector).ToAbsolute();
 }

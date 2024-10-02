@@ -46,4 +46,39 @@ public class Point3DTests
 
         result.Should().BeEquivalentTo(Point.ByCoordinates(2.5, 3.5, 4.5));
     }
+
+    [Theory]
+    [MemberData(nameof(MeasureSignedDistanceToPointAlongVectorTestData))]
+    public void MeasureSignedDistanceToPointAlongVector_ShouldMeasureNonAbsoluteDistance(
+        Point3D source, Point3D destination, Vector3D vector, double expected)
+    {
+        source
+            .MeasureSignedDistanceToPointAlongVector(destination, vector)
+            .Should()
+            .BeApproximately(expected, Defaults.Tolerance);
+    }
+
+    public static IEnumerable<object[]> MeasureSignedDistanceToPointAlongVectorTestData()
+    {
+        yield return [
+            Point.Origin(),
+            Point.Origin(),
+            Vector.XAxis(),
+            0
+        ];
+
+        yield return [
+            Point.Origin(),
+            Point.ByCoordinates(1, 0, 0),
+            Vector.XAxis(),
+            1
+        ];
+
+        yield return [
+            Point.Origin(),
+            Point.ByCoordinates(1, 0, 0),
+            Vector.XAxis().Negate(),
+            -1
+        ];
+    }
 }
