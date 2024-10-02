@@ -33,6 +33,20 @@ public static class Point3DExtensions
     public static Vector3D AsVector(this Point3D point) =>
         Vector.ByCoordinates(point.X, point.Y, point.Z);
 
+    public static bool IsCollinearTo(
+        this Point3D point,
+        LineSegment lineSegment,
+        double tolerance = Defaults.Tolerance)
+    {
+        return lineSegment
+            .GetDirection()
+            .CrossProduct(point
+                .AsVector()
+                .Subtract(lineSegment.Start.AsVector()))
+            .Magnitude()
+            .AlmostEqualTo(0, tolerance);
+    }
+
     public static double MeasureSignedDistanceToPointAlongVector(
        this Point3D point, Point3D other, Vector3D vector)
     {

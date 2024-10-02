@@ -27,4 +27,6 @@ public static class DoubleExtensions
     {
         return to.SubtractFrom(from).ToAbsolute() < tolerance;
     }
+
+    public static double Atan2(this double from, double to) => Math.Atan2(from, to);
 }
