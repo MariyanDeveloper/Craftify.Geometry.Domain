@@ -58,6 +58,14 @@ public class Point3DTests
             .BeApproximately(expected, Defaults.Tolerance);
     }
 
+    [Theory]
+    [MemberData(nameof(LiesOnCurveTestData))]
+    public void LiesOnCurve_ShouldDetermineIfPointLiesOnCurve(
+        Point3D point, Curve curve, bool expected)
+    {
+        point.LiesOnCurve(curve).Should().Be(expected);
+    }
+
     public static IEnumerable<object[]> MeasureSignedDistanceToPointAlongVectorTestData()
     {
         yield return [
@@ -79,6 +87,56 @@ public class Point3DTests
             Point.ByCoordinates(1, 0, 0),
             Vector.XAxis().Negate(),
             -1
+        ];
+    }
+
+    public static IEnumerable<object[]> LiesOnCurveTestData()
+    {
+        yield return [
+            Point.Origin(),
+            Line.ByStartPointAndEndPoint(Point.ByCoordinates(-1, 0, 0), Point.ByCoordinates(1, 0, 0)),
+            true
+        ];
+
+        yield return [
+            Point.Origin(),
+            Line.ByStartPointAndEndPoint(Point.Origin(), Point.ByCoordinates(1, 0, 0)),
+            true
+        ];
+
+        yield return [
+            Point.ByCoordinates(1, 1, 1),
+            Line.ByStartPointAndEndPoint(Point.Origin(), Point.ByCoordinates(2, 2, 2)),
+            true
+        ];
+
+        yield return [
+            Point.ByCoordinates(0, 1, 0),
+            Arc.ByCenterPointRadiusEndAngle(Point.Origin(), 1, 0d, 270d, Vector.ZAxis()),
+            true
+        ];
+
+        yield return [
+            Point.ByCoordinates(0, 0, 1),
+            Arc.ByCenterPointRadiusEndAngle(Point.Origin(), 1, 0d, 270d, Vector.XAxis()),
+            true
+        ];
+
+        yield return [
+            Point.ByCoordinates(1, 1, 0),
+            Arc.ByCenterPointRadiusEndAngle(Point.Origin(), 1, 0d, 270d, Vector.XAxis()),
+            false
+        ];
+
+        yield return [
+            Point.ByCoordinates(-1.61554457443259E-15, -0.707106781186547, -0.707106781186547),
+            Arc.ByCenterPointRadiusEndAngle(
+                Point.Origin(),
+                1,
+                0d,
+                270d,
+                Vector.ByCoordinates(1, 1, -1)),
+            true
         ];
     }
 }
