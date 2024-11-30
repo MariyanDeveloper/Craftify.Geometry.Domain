@@ -79,9 +79,34 @@ public static class Vector3DExtensions
         return angleInDegrees < 0 ? angleInDegrees + 360 : angleInDegrees;
     }
 
+    public static Point3D AsPoint(this Vector3D vector) =>
+        Point.ByCoordinates(vector.X, vector.Y, vector.Z);
+
     public static Vector3D ProjectOnto(this Vector3D vector, Vector3D onto)
     {
         var scalarProjection = vector.DotProduct(onto) / onto.DotProduct(onto);
         return onto.Multiply(scalarProjection);
     }
+
+    public static bool IsParallelTo(
+        this Vector3D vector1,
+        Vector3D vector2,
+        double tolerance = Defaults.Tolerance
+    )
+    {
+        return vector1.CrossProduct(vector2).IsZero(tolerance);
+    }
+
+    public static bool IsZero(this Vector3D vector, double tolerance = Defaults.Tolerance)
+    {
+        return vector.Magnitude().AlmostEqualTo(0, tolerance);
+    }
+
+    public static bool IsUnit(this Vector3D vector, double tolerance = Defaults.Tolerance)
+    {
+        return vector.Magnitude().AlmostEqualTo(1, tolerance);
+    }
+
+    public static Vector3D Transform(this Vector3D vector, CoordinateSystem3D coordinateSystem) =>
+        coordinateSystem.OfVector(vector);
 }

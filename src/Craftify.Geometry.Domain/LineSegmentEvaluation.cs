@@ -12,21 +12,103 @@ public static class LineSegmentEvaluation
         );
     }
 
-    public static double GetLength(this LineSegment lineSegment)
-    {
-        double deltaX = lineSegment.End.X - lineSegment.Start.X;
-        double deltaY = lineSegment.End.Y - lineSegment.Start.Y;
-        double deltaZ = lineSegment.End.Z - lineSegment.Start.Z;
+    public static Vector3D GetNormalizedDirection(this LineSegment line) =>
+        Vector.ByTwoPoints(line.Start, line.End).Normalize();
 
-        return Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+    public static Vector3D GetDirection(this LineSegment line) =>
+        Vector.ByTwoPoints(line.Start, line.End);
+
+    public static double GetLength(this LineSegment line) => line.GetDirection().Magnitude();
+
+    public static bool IsParallelTo(
+        this LineSegment line1,
+        LineSegment line2,
+        double tolerance = Defaults.Tolerance
+    )
+    {
+        return line1
+            .GetNormalizedDirection()
+            .IsParallelTo(line2.GetNormalizedDirection(), tolerance);
     }
 
-    public static Vector3D GetDirection(this LineSegment lineSegment)
+    public static IEnumerable<Point3D> GetEndPoints(this LineSegment lineSegment)
     {
-        double deltaX = lineSegment.End.X - lineSegment.Start.X;
-        double deltaY = lineSegment.End.Y - lineSegment.Start.Y;
-        double deltaZ = lineSegment.End.Z - lineSegment.Start.Z;
+        yield return lineSegment.Start;
+        yield return lineSegment.End;
+    }
 
-        return new Vector3D(deltaX, deltaY, deltaZ);
+    public static bool IsCollinearTo(
+        this LineSegment line1,
+        LineSegment line2,
+        double tolerance = Defaults.Tolerance
+    )
+    {
+        if (!line1.IsParallelTo(line2, tolerance))
+        {
+            return false;
+        }
+
+        return Vector
+            .ByTwoPoints(line1.Start, line2.Start)
+            .IsParallelTo(line1.GetNormalizedDirection());
+    }
+
+    public static bool IsConnectedTo(
+        this LineSegment line1,
+        LineSegment line2,
+        double tolerance = Defaults.Tolerance
+    )
+    {
+        return line1.Start.AlmostEqualTo(line2.Start, tolerance)
+            || line1.Start.AlmostEqualTo(line2.End, tolerance)
+            || line1.End.AlmostEqualTo(line2.Start, tolerance)
+            || line1.End.AlmostEqualTo(line2.End, tolerance);
+    }
+
+    public static bool AlmostEqualTo(
+        this LineSegment line1,
+        LineSegment line2,
+        double tolerance = Defaults.Tolerance
+    )
+    {
+        var isFirstPairConnected =
+            line1.Start.AlmostEqualTo(line2.Start, tolerance)
+            && line1.End.AlmostEqualTo(line2.End, tolerance);
+        var isSecondPairConnected =
+            line1.Start.AlmostEqualTo(line2.End, tolerance)
+            && line1.End.AlmostEqualTo(line2.Start, tolerance);
+        return isFirstPairConnected || isSecondPairConnected;
+    }
+
+    public static LineSegment Translate(this LineSegment lineSegment, Vector3D translation)
+    {
+        var newStart = lineSegment.Start.Translate(translation);
+        var newEnd = lineSegment.End.Translate(translation);
+        return Line.ByStartPointAndEndPoint(newStart, newEnd);
+    }
+
+    public static LineSegment ExtendEnd(this LineSegment lineSegment, double distance)
+    {
+        return lineSegment with
+        {
+            End = lineSegment.End.Translate(lineSegment.GetNormalizedDirection().Scale(distance)),
+        };
+    }
+
+    public static LineSegment Transform(
+        this LineSegment line,
+        CoordinateSystem3D coordinateSystem) =>
+        Line.ByStartPointAndEndPoint(
+            start: line.Start.Transform(coordinateSystem),
+            end: line.End.Transform(coordinateSystem)
+        );
+
+    public static bool HasEndPoint(
+        this LineSegment line,
+        Point3D point,
+        double tolerance = Defaults.Tolerance)
+    {
+        return line.GetEndPoints().Any(
+            endPoint => endPoint.AlmostEqualTo(point, tolerance));
     }
 }

@@ -17,6 +17,9 @@ public static class Point3DExtensions
         return new Point3D(point.X + vector.X, point.Y + vector.Y, point.Z + vector.Z);
     }
 
+    public static Point3D Transform(this Point3D point, CoordinateSystem3D coordinateSystem) =>
+        coordinateSystem.OfPoint(point);
+
     public static Point3D Midpoint(this Point3D point, Point3D other)
     {
         var halfDivisionNumber = 2;
@@ -26,6 +29,20 @@ public static class Point3DExtensions
             (point.Z + other.Z) / halfDivisionNumber
         );
     }
+
+    public static Vector3D AsVector(this Point3D point) =>
+        Vector.ByCoordinates(point.X, point.Y, point.Z);
+
+    public static double MeasureSignedDistanceToPointAlongVector(
+       this Point3D point, Point3D other, Vector3D vector)
+    {
+        var difference = other.AsVector().Subtract(point.AsVector());
+        return !difference.IsZero() ? difference.DotProduct(vector.Normalize()) : 0;
+    }
+
+    public static double MeasureDistanceToPointAlongVector(
+        this Point3D point, Point3D other, Vector3D vector) => 
+            point.MeasureSignedDistanceToPointAlongVector(other, vector).ToAbsolute();
 
     public static Vector3D SubtractPoint(this Point3D main, Point3D other)
         => new(main.X - other.X, main.Y - other.Y, main.Z - other.Z);
