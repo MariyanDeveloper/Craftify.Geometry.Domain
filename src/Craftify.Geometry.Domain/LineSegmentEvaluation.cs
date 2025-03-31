@@ -97,10 +97,18 @@ public static class LineSegmentEvaluation
 
     public static LineSegment Transform(
         this LineSegment line,
-        CoordinateSystem3D coordinateSystem
-    ) =>
+        CoordinateSystem3D coordinateSystem) =>
         Line.ByStartPointAndEndPoint(
             start: line.Start.Transform(coordinateSystem),
             end: line.End.Transform(coordinateSystem)
         );
+
+    public static bool HasEndPoint(
+        this LineSegment line,
+        Point3D point,
+        double tolerance = Defaults.Tolerance)
+    {
+        return line.GetEndPoints().Any(
+            endPoint => endPoint.AlmostEqualTo(point, tolerance));
+    }
 }

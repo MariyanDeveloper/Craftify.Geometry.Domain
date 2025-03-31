@@ -27,4 +27,6 @@ public static class DoubleExtensions
     {
         return to.SubtractFrom(from).ToAbsolute() < tolerance;
     }
+
+    public static bool IsCloseToZero(this double value) => Math.Abs(value) < Defaults.Tolerance;
 }

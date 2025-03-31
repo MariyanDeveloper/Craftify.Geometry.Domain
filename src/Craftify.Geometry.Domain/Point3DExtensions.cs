@@ -43,4 +43,7 @@ public static class Point3DExtensions
     public static double MeasureDistanceToPointAlongVector(
         this Point3D point, Point3D other, Vector3D vector) => 
             point.MeasureSignedDistanceToPointAlongVector(other, vector).ToAbsolute();
+
+    public static Vector3D SubtractPoint(this Point3D main, Point3D other)
+        => new(main.X - other.X, main.Y - other.Y, main.Z - other.Z);
 }
